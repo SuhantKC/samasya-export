@@ -1,0 +1,433 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model applicants_applicant {
+  id                                                                                           BigInt                                      @id @default(autoincrement())
+  applicant_name                                                                               String                                      @db.VarChar(255)
+  applicant_name_en                                                                            String                                      @db.VarChar(255)
+  dob                                                                                          String                                      @db.VarChar(255)
+  gender                                                                                       String                                      @db.VarChar(255)
+  father_name                                                                                  String                                      @db.VarChar(255)
+  share_membership_number                                                                      String?                                     @db.VarChar(255)
+  citizenship_number                                                                           String                                      @db.VarChar(255)
+  citizenship_issue_date                                                                       String                                      @db.VarChar(255)
+  p_municipality_id                                                                            String                                      @db.VarChar(255)
+  p_ward_no                                                                                    String                                      @db.VarChar(255)
+  p_street                                                                                     String?                                     @db.VarChar(255)
+  c_ward_no                                                                                    String?                                     @db.VarChar(255)
+  c_street                                                                                     String?                                     @db.VarChar(255)
+  applicant_phone                                                                              String                                      @db.VarChar(255)
+  bank_account_number                                                                          String                                      @db.VarChar(255)
+  account_name                                                                                 String                                      @db.VarChar(255)
+  bank_name                                                                                    String                                      @db.VarChar(255)
+  bank_branch_name                                                                             String                                      @db.VarChar(255)
+  previously_registered                                                                        Boolean
+  previous_registration_number                                                                 String?                                     @db.VarChar(255)
+  previous_registration_date                                                                   String?                                     @db.VarChar(255)
+  created_at                                                                                   DateTime                                    @db.DateTime(6)
+  updated_at                                                                                   DateTime                                    @db.DateTime(6)
+  type                                                                                         String                                      @db.VarChar(255)
+  description1                                                                                 String?                                     @db.VarChar(400)
+  description2                                                                                 String?                                     @db.VarChar(400)
+  registration_number                                                                          String?                                     @db.VarChar(255)
+  branch_id                                                                                    BigInt?
+  c_district_id_id                                                                             BigInt?
+  c_municipality_id_id                                                                         BigInt?
+  citizenship_issue_district_id_id                                                             BigInt?
+  cooperative_id                                                                               BigInt?
+  p_district_id_id                                                                             BigInt?
+  p_zone_id_id                                                                                 BigInt?
+  state_id_id                                                                                  BigInt?
+  status                                                                                       String                                      @db.VarChar(1)
+  approved_rejected_remarks                                                                    String?                                     @db.VarChar(400)
+  cooperatives_branch                                                                          cooperatives_branch?                        @relation(fields: [branch_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applicants_applicant_branch_id_31981871_fk_cooperati")
+  locations_district_applicants_applicant_c_district_id_idTolocations_district                 locations_district?                         @relation("applicants_applicant_c_district_id_idTolocations_district", fields: [c_district_id_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applicants_applicant_c_district_id_id_1d7a7016_fk_locations")
+  locations_municipality                                                                       locations_municipality?                     @relation(fields: [c_municipality_id_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applicants_applicant_c_municipality_id_id_ec007dbd_fk_locations")
+  locations_district_applicants_applicant_citizenship_issue_district_id_idTolocations_district locations_district?                         @relation("applicants_applicant_citizenship_issue_district_id_idTolocations_district", fields: [citizenship_issue_district_id_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applicants_applicant_citizenship_issue_di_5ad22179_fk_locations")
+  cooperatives_cooperative                                                                     cooperatives_cooperative?                   @relation(fields: [cooperative_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applicants_applicant_cooperative_id_a1fbaf74_fk_cooperati")
+  locations_district_applicants_applicant_p_district_id_idTolocations_district                 locations_district?                         @relation("applicants_applicant_p_district_id_idTolocations_district", fields: [p_district_id_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applicants_applicant_p_district_id_id_c1e166d1_fk_locations")
+  locations_zone                                                                               locations_zone?                             @relation(fields: [p_zone_id_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applicants_applicant_p_zone_id_id_200d831e_fk_locations_zone_id")
+  locations_state                                                                              locations_state?                            @relation(fields: [state_id_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applicants_applicant_state_id_id_e76441f3_fk_locations_state_id")
+  applicants_applicantapartment                                                                applicants_applicantapartment[]
+  applicants_applicantdocument                                                                 applicants_applicantdocument[]
+  applicants_applicantfixedsaving                                                              applicants_applicantfixedsaving[]
+  applicants_applicantgovloan                                                                  applicants_applicantgovloan[]
+  applicants_applicantinvestment                                                               applicants_applicantinvestment[]
+  applicants_applicantmortgageinvestment                                                       applicants_applicantmortgageinvestment[]
+  applicants_applicantorginvestment                                                            applicants_applicantorginvestment[]
+  applicants_applicantorgmortgageinvestment                                                    applicants_applicantorgmortgageinvestment[]
+  applicants_applicantotherdue                                                                 applicants_applicantotherdue[]
+  applicants_applicantsaving                                                                   applicants_applicantsaving[]
+  applicants_applicantshare                                                                    applicants_applicantshare[]
+
+  @@index([branch_id], map: "applicants_applicant_branch_id_31981871_fk_cooperati")
+  @@index([c_district_id_id], map: "applicants_applicant_c_district_id_id_1d7a7016_fk_locations")
+  @@index([c_municipality_id_id], map: "applicants_applicant_c_municipality_id_id_ec007dbd_fk_locations")
+  @@index([citizenship_issue_district_id_id], map: "applicants_applicant_citizenship_issue_di_5ad22179_fk_locations")
+  @@index([cooperative_id], map: "applicants_applicant_cooperative_id_a1fbaf74_fk_cooperati")
+  @@index([p_district_id_id], map: "applicants_applicant_p_district_id_id_c1e166d1_fk_locations")
+  @@index([p_zone_id_id], map: "applicants_applicant_p_zone_id_id_200d831e_fk_locations_zone_id")
+  @@index([state_id_id], map: "applicants_applicant_state_id_id_e76441f3_fk_locations_state_id")
+}
+
+model applicants_applicantapartment {
+  id                     BigInt               @id @default(autoincrement())
+  property_name          String?              @db.VarChar(255)
+  property_address       String?              @db.VarChar(255)
+  flat_number            String?              @db.VarChar(155)
+  booked_date            String?              @db.VarChar(255)
+  booking_deposit_amount String?              @db.VarChar(255)
+  due_amount             String?              @db.VarChar(255)
+  remarks                String?              @db.VarChar(255)
+  applicant_id           BigInt
+  booking_rate           String?              @db.VarChar(255)
+  applicants_applicant   applicants_applicant @relation(fields: [applicant_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applicants_applicant_applicant_id_d6542b2d_fk_applicant")
+
+  @@index([applicant_id], map: "applicants_applicant_applicant_id_d6542b2d_fk_applicant")
+}
+
+model applicants_applicantdocument {
+  id                      BigInt               @id @default(autoincrement())
+  saving_receipt          String?              @db.VarChar(100)
+  share_certificate       String?              @db.VarChar(100)
+  mortgage_document       String?              @db.VarChar(100)
+  citizenship_front       String?              @db.VarChar(100)
+  citizenship_back        String?              @db.VarChar(100)
+  loan_clearence_document String?              @db.VarChar(100)
+  other_document          String?              @db.VarChar(100)
+  signature               String?              @db.VarChar(100)
+  applicant_id            BigInt
+  applicants_applicant    applicants_applicant @relation(fields: [applicant_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applicants_applicant_applicant_id_50775a96_fk_applicant")
+
+  @@index([applicant_id], map: "applicants_applicant_applicant_id_50775a96_fk_applicant")
+}
+
+model applicants_applicantfixedsaving {
+  id                   BigInt               @id @default(autoincrement())
+  fixed_remarks        String?              @db.VarChar(255)
+  applicant_id         BigInt
+  fixed_account_number String               @db.VarChar(150)
+  fixed_interest_rate  String               @db.VarChar(100)
+  fixed_saving_amount  Int?
+  fixed_saving_date    String               @db.VarChar(100)
+  fixed_saving_type    String               @db.VarChar(100)
+  applicants_applicant applicants_applicant @relation(fields: [applicant_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applicants_applicant_applicant_id_c1bb5f61_fk_applicant")
+
+  @@index([applicant_id], map: "applicants_applicant_applicant_id_c1bb5f61_fk_applicant")
+}
+
+model applicants_applicantgovloan {
+  id                   BigInt               @id @default(autoincrement())
+  loan_description     String?              @db.VarChar(255)
+  loan_date            String?              @db.VarChar(255)
+  loan_due_amount      String?              @db.VarChar(255)
+  loan_remarks         String?              @db.VarChar(255)
+  applicant_id         BigInt
+  applicants_applicant applicants_applicant @relation(fields: [applicant_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applicants_applicant_applicant_id_0f24035e_fk_applicant")
+
+  @@index([applicant_id], map: "applicants_applicant_applicant_id_0f24035e_fk_applicant")
+}
+
+model applicants_applicantinvestment {
+  id                   BigInt               @id @default(autoincrement())
+  investor_name        String?              @db.VarChar(255)
+  project_name         String?              @db.VarChar(255)
+  invest_date          String?              @db.VarChar(255)
+  principal_amount     String?              @db.VarChar(255)
+  inv_interest_rate    String?              @db.VarChar(255)
+  returned_amount      String?              @db.VarChar(255)
+  inv_due_interest     String?              @db.VarChar(255)
+  inv_due_amount       String?              @db.VarChar(255)
+  inv_remarks          String?              @db.VarChar(255)
+  applicant_id         BigInt
+  applicants_applicant applicants_applicant @relation(fields: [applicant_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applicants_applicant_applicant_id_0432e2ca_fk_applicant")
+
+  @@index([applicant_id], map: "applicants_applicant_applicant_id_0432e2ca_fk_applicant")
+}
+
+model applicants_applicantmortgageinvestment {
+  id                    BigInt               @id @default(autoincrement())
+  mortgage_type         String?              @db.VarChar(255)
+  mortgage_name         String?              @db.VarChar(255)
+  mortgage_address      String?              @db.VarChar(255)
+  kitta_number          String?              @db.VarChar(255)
+  area                  String?              @db.VarChar(255)
+  mortgage_stopped_date String?              @db.VarChar(255)
+  mortgage_remarks      String?              @db.VarChar(255)
+  applicant_id          BigInt
+  applicants_applicant  applicants_applicant @relation(fields: [applicant_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applicants_applicant_applicant_id_022dc5b9_fk_applicant")
+
+  @@index([applicant_id], map: "applicants_applicant_applicant_id_022dc5b9_fk_applicant")
+}
+
+model applicants_applicantorginvestment {
+  id                   BigInt               @id @default(autoincrement())
+  org_loan_date        String?              @db.VarChar(255)
+  org_due_principal    String?              @db.VarChar(255)
+  org_interest_rate    String?              @db.VarChar(255)
+  org_due_interest     String?              @db.VarChar(255)
+  org_due_amount       String?              @db.VarChar(255)
+  org_remarks          String?              @db.VarChar(255)
+  applicant_id         BigInt
+  applicants_applicant applicants_applicant @relation(fields: [applicant_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applicants_applicant_applicant_id_20b0c015_fk_applicant")
+
+  @@index([applicant_id], map: "applicants_applicant_applicant_id_20b0c015_fk_applicant")
+}
+
+model applicants_applicantorgmortgageinvestment {
+  id                          BigInt               @id @default(autoincrement())
+  org_m_mortgage_type         String?              @db.VarChar(255)
+  org_m_mortgage_name         String?              @db.VarChar(255)
+  org_m_mortgage_address      String?              @db.VarChar(255)
+  org_m_seat_number           String?              @db.VarChar(255)
+  org_m_kitta_number          String?              @db.VarChar(255)
+  org_m_area                  String?              @db.VarChar(255)
+  org_m_mortgage_stopped_date String?              @db.VarChar(255)
+  org_m_remarks               String?              @db.VarChar(255)
+  applicant_id                BigInt
+  applicants_applicant        applicants_applicant @relation(fields: [applicant_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applicants_applicant_applicant_id_b50fb56a_fk_applicant")
+
+  @@index([applicant_id], map: "applicants_applicant_applicant_id_b50fb56a_fk_applicant")
+}
+
+model applicants_applicantotherdue {
+  id                    BigInt               @id @default(autoincrement())
+  other_claim_detail    String?              @db.VarChar(255)
+  other_date_to_receive String?              @db.VarChar(255)
+  other_claim_amount    String?              @db.VarChar(255)
+  other_claim_reason    String?              @db.VarChar(255)
+  other_remarks         String?              @db.VarChar(255)
+  applicant_id          BigInt
+  applicants_applicant  applicants_applicant @relation(fields: [applicant_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applicants_applicant_applicant_id_4595e56d_fk_applicant")
+
+  @@index([applicant_id], map: "applicants_applicant_applicant_id_4595e56d_fk_applicant")
+}
+
+model applicants_applicantsaving {
+  id                   BigInt               @id @default(autoincrement())
+  remarks              String?              @db.VarChar(255)
+  applicant_id         BigInt
+  account_number       String               @db.VarChar(150)
+  interest_rate        String               @db.VarChar(100)
+  saving_amount        Int?
+  saving_date          String               @db.VarChar(100)
+  saving_type          String               @db.VarChar(100)
+  applicants_applicant applicants_applicant @relation(fields: [applicant_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applicants_applicant_applicant_id_82f1d624_fk_applicant")
+
+  @@index([applicant_id], map: "applicants_applicant_applicant_id_82f1d624_fk_applicant")
+}
+
+model applicants_applicantshare {
+  id                   BigInt               @id @default(autoincrement())
+  share_borrowed_date  String?              @db.VarChar(100)
+  share_count          Int?
+  share_purchase_rate  Decimal?             @db.Decimal(10, 2)
+  share_total_amount   Decimal?             @db.Decimal(10, 2)
+  share_remarks        String?              @db.VarChar(255)
+  applicant_id         BigInt
+  applicants_applicant applicants_applicant @relation(fields: [applicant_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applicants_applicant_applicant_id_a64d9edb_fk_applicant")
+
+  @@index([applicant_id], map: "applicants_applicant_applicant_id_a64d9edb_fk_applicant")
+}
+
+model auth_group {
+  id                     Int                      @id @default(autoincrement())
+  name                   String                   @unique(map: "name") @db.VarChar(150)
+  auth_group_permissions auth_group_permissions[]
+  auth_user_groups       auth_user_groups[]
+}
+
+model auth_group_permissions {
+  id              BigInt          @id @default(autoincrement())
+  group_id        Int
+  permission_id   Int
+  auth_permission auth_permission @relation(fields: [permission_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "auth_group_permissio_permission_id_84c5c92e_fk_auth_perm")
+  auth_group      auth_group      @relation(fields: [group_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "auth_group_permissions_group_id_b120cbf9_fk_auth_group_id")
+
+  @@unique([group_id, permission_id], map: "auth_group_permissions_group_id_permission_id_0cd325b0_uniq")
+  @@index([permission_id], map: "auth_group_permissio_permission_id_84c5c92e_fk_auth_perm")
+}
+
+model auth_permission {
+  id                         Int                          @id @default(autoincrement())
+  name                       String                       @db.VarChar(255)
+  content_type_id            Int
+  codename                   String                       @db.VarChar(100)
+  auth_group_permissions     auth_group_permissions[]
+  django_content_type        django_content_type          @relation(fields: [content_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "auth_permission_content_type_id_2f476e4b_fk_django_co")
+  auth_user_user_permissions auth_user_user_permissions[]
+
+  @@unique([content_type_id, codename], map: "auth_permission_content_type_id_codename_01ab375a_uniq")
+}
+
+model auth_user {
+  id                         Int                          @id @default(autoincrement())
+  password                   String                       @db.VarChar(128)
+  last_login                 DateTime?                    @db.DateTime(6)
+  is_superuser               Boolean
+  username                   String                       @unique(map: "username") @db.VarChar(150)
+  first_name                 String                       @db.VarChar(150)
+  last_name                  String                       @db.VarChar(150)
+  email                      String                       @db.VarChar(254)
+  is_staff                   Boolean
+  is_active                  Boolean
+  date_joined                DateTime                     @db.DateTime(6)
+  auth_user_groups           auth_user_groups[]
+  auth_user_user_permissions auth_user_user_permissions[]
+  django_admin_log           django_admin_log[]
+}
+
+model auth_user_groups {
+  id         BigInt     @id @default(autoincrement())
+  user_id    Int
+  group_id   Int
+  auth_group auth_group @relation(fields: [group_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "auth_user_groups_group_id_97559544_fk_auth_group_id")
+  auth_user  auth_user  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "auth_user_groups_user_id_6a12ed8b_fk_auth_user_id")
+
+  @@unique([user_id, group_id], map: "auth_user_groups_user_id_group_id_94350c0c_uniq")
+  @@index([group_id], map: "auth_user_groups_group_id_97559544_fk_auth_group_id")
+}
+
+model auth_user_user_permissions {
+  id              BigInt          @id @default(autoincrement())
+  user_id         Int
+  permission_id   Int
+  auth_permission auth_permission @relation(fields: [permission_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm")
+  auth_user       auth_user       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id")
+
+  @@unique([user_id, permission_id], map: "auth_user_user_permissions_user_id_permission_id_14a6b632_uniq")
+  @@index([permission_id], map: "auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm")
+}
+
+model cooperatives_branch {
+  id                                BigInt                              @id @default(autoincrement())
+  name                              String                              @unique(map: "name") @db.VarChar(255)
+  applicants_applicant              applicants_applicant[]
+  cooperatives_cooperative_branches cooperatives_cooperative_branches[]
+}
+
+model cooperatives_cooperative {
+  id                                BigInt                              @id @default(autoincrement())
+  name                              String                              @db.VarChar(255)
+  address                           String                              @db.LongText
+  applicants_applicant              applicants_applicant[]
+  cooperatives_cooperative_branches cooperatives_cooperative_branches[]
+}
+
+model cooperatives_cooperative_branches {
+  id                       BigInt                   @id @default(autoincrement())
+  cooperative_id           BigInt
+  branch_id                BigInt
+  cooperatives_branch      cooperatives_branch      @relation(fields: [branch_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "cooperatives_coopera_branch_id_e7b28e5a_fk_cooperati")
+  cooperatives_cooperative cooperatives_cooperative @relation(fields: [cooperative_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "cooperatives_coopera_cooperative_id_da9b347c_fk_cooperati")
+
+  @@unique([cooperative_id, branch_id], map: "cooperatives_cooperative_cooperative_id_branch_id_8ea0b0b7_uniq")
+  @@index([branch_id], map: "cooperatives_coopera_branch_id_e7b28e5a_fk_cooperati")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model django_admin_log {
+  id                  Int                  @id @default(autoincrement())
+  action_time         DateTime             @db.DateTime(6)
+  object_id           String?              @db.LongText
+  object_repr         String               @db.VarChar(200)
+  action_flag         Int                  @db.UnsignedSmallInt
+  change_message      String               @db.LongText
+  content_type_id     Int?
+  user_id             Int
+  django_content_type django_content_type? @relation(fields: [content_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "django_admin_log_content_type_id_c4bce8eb_fk_django_co")
+  auth_user           auth_user            @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "django_admin_log_user_id_c564eba6_fk_auth_user_id")
+
+  @@index([content_type_id], map: "django_admin_log_content_type_id_c4bce8eb_fk_django_co")
+  @@index([user_id], map: "django_admin_log_user_id_c564eba6_fk_auth_user_id")
+}
+
+model django_content_type {
+  id               Int                @id @default(autoincrement())
+  app_label        String             @db.VarChar(100)
+  model            String             @db.VarChar(100)
+  auth_permission  auth_permission[]
+  django_admin_log django_admin_log[]
+
+  @@unique([app_label, model], map: "django_content_type_app_label_model_76bd3d3b_uniq")
+}
+
+model django_migrations {
+  id      BigInt   @id @default(autoincrement())
+  app     String   @db.VarChar(255)
+  name    String   @db.VarChar(255)
+  applied DateTime @db.DateTime(6)
+}
+
+model django_session {
+  session_key  String   @id @db.VarChar(40)
+  session_data String   @db.LongText
+  expire_date  DateTime @db.DateTime(6)
+
+  @@index([expire_date], map: "django_session_expire_date_a5c62663")
+}
+
+model locations_district {
+  id                                                                                             BigInt                   @id @default(autoincrement())
+  name                                                                                           String                   @db.VarChar(100)
+  state_id                                                                                       BigInt
+  applicants_applicant_applicants_applicant_c_district_id_idTolocations_district                 applicants_applicant[]   @relation("applicants_applicant_c_district_id_idTolocations_district")
+  applicants_applicant_applicants_applicant_citizenship_issue_district_id_idTolocations_district applicants_applicant[]   @relation("applicants_applicant_citizenship_issue_district_id_idTolocations_district")
+  applicants_applicant_applicants_applicant_p_district_id_idTolocations_district                 applicants_applicant[]   @relation("applicants_applicant_p_district_id_idTolocations_district")
+  locations_state                                                                                locations_state          @relation(fields: [state_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "locations_district_state_id_e48616b4_fk_locations_state_id")
+  locations_municipality                                                                         locations_municipality[]
+
+  @@index([state_id], map: "locations_district_state_id_e48616b4_fk_locations_state_id")
+}
+
+model locations_municipality {
+  id                   BigInt                 @id @default(autoincrement())
+  name                 String                 @db.VarChar(250)
+  district_id          BigInt
+  applicants_applicant applicants_applicant[]
+  locations_district   locations_district     @relation(fields: [district_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "locations_municipali_district_id_38ea8069_fk_locations")
+
+  @@index([district_id], map: "locations_municipali_district_id_38ea8069_fk_locations")
+}
+
+model locations_state {
+  id                   BigInt                 @id @default(autoincrement())
+  name                 String                 @db.VarChar(100)
+  applicants_applicant applicants_applicant[]
+  locations_district   locations_district[]
+}
+
+model locations_zone {
+  id                   BigInt                 @id @default(autoincrement())
+  name                 String                 @db.VarChar(100)
+  applicants_applicant applicants_applicant[]
+}
+
+model members_member {
+  id        BigInt @id @default(autoincrement())
+  firstname String @db.VarChar(255)
+  lastname  String @db.VarChar(255)
+  email     String @unique(map: "email") @db.VarChar(254)
+  phone     String @db.VarChar(20)
+  address   String @db.VarChar(255)
+}
+
+model site_settings_sitesettings {
+  id               BigInt  @id @default(autoincrement())
+  site_title       String? @db.VarChar(255)
+  site_description String? @db.LongText
+  logo             String? @db.VarChar(100)
+  fav_icon         String? @db.VarChar(100)
+  email            String? @db.VarChar(254)
+  phone            String? @db.VarChar(20)
+  address          String? @db.VarChar(255)
+  facebook_url     String? @db.VarChar(255)
+  instagram_url    String? @db.VarChar(255)
+  twitter_url      String? @db.VarChar(255)
+}
